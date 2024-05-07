@@ -36,3 +36,20 @@ def get_company(employee_ids):
             for url in unique_company_url:
                 company_list.append({'companies': {'company_name': company, 'company_url': url}})
     return company_list
+
+
+def get_vacancies(employee_ids):
+    """Получение списка вакансий"""
+    vacancies_list = []
+    for employer_id in employee_ids:
+        emp_vacancies = get_url(employer_id)
+        for vacancy in emp_vacancies:
+            if vacancy['salary']['from'] is not None and vacancy['salary']['to'] is not None:
+                vacancies_list.append({'vacancies': {'vacancy_name': vacancy['name'],
+                                                     'city': vacancy['area']['name'],
+                                                     'salary_from': vacancy['salary']['from'],
+                                                     'salary_to': vacancy['salary']['to'],
+                                                     'publish_date': vacancy['published_at'],
+                                                     'vacancy_url': vacancy['alternate_url'],
+                                                     'company_name': vacancy['employer']['name']}})
+    return vacancies_list
