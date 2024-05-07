@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c116ab4d-6307-4540-8505-20e90a467a78" name="Changes" comment="init">
+    <list default="true" id="c116ab4d-6307-4540-8505-20e90a467a78" name="Changes" comment="get url">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,11 +95,28 @@
       <option name="project" value="LOCAL" />
       <updated>1715111679828</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="get url">
+      <option name="closed" value="true" />
+      <created>1715113375820</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1715113375820</updated>
+    </task>
+    <task id="LOCAL-00006" summary="get url">
+      <option name="closed" value="true" />
+      <created>1715114472883</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1715114472883</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
-    <option name="LAST_COMMIT_MESSAGE" value="init" />
+    <MESSAGE value="get url" />
+    <option name="LAST_COMMIT_MESSAGE" value="get url" />
   </component>
 </project>

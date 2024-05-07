@@ -22,7 +22,7 @@ def get_url(employee_id):
 
 
 def get_company(employee_ids):
-    '''Получение списка компаний'''
+    """Получение списка компаний"""
     company_list = []
     for employee_id in employee_ids:
         co_n = []
@@ -65,4 +65,58 @@ def create_database(database_name, params):
     cur.execute(f'DROP DATABASE {database_name}')
     cur.execute(f'CREATE DATABASE {database_name}')
 
+    conn.close()
+
+
+def save_data_to_database(company_list, vacancy_list, database_name, params):
+    """Сохранение полученной информации в таблицах"""
+    conn = psycopg2.connect(dbname=database_name, **params)
+
+    with conn.cursor() as cur:
+        cur.execute('''
+               CREATE TABLE companies(
+               company_id SERIAL PRIMARY KEY ,
+               company_name VARCHAR(150) NOT NULL,
+               url_company TEXT
+               )
+               ''')
+
+    with conn.cursor() as cur:
+        cur.execute('''
+           CREATE TABLE vacancies(
+           vacancy_id SERIAL PRIMARY KEY,
+           company_id INT REFERENCES companies(company_id),
+           vacancy_name VARCHAR(150) NOT NULL,
+           city_name VARCHAR(100),
+           publish_date DATE,
+           company_name VARCHAR(150) NOT NULL ,
+           salary_from INTEGER,
+           salary_to INTEGER,
+           url_vacancy TEXT
+           )
+           ''')
+
+    with conn.cursor() as cur:
+        for company in company_list:
+            company_data = company['companies']
+            cur.execute('''
+                INSERT INTO companies(company_name, url_company)
+                VALUES (%s, %s)
+                RETURNING company_id
+                ''',
+                        (company_data['company_name'], company_data['company_url']))
+            company_id = cur.fetchone()[0]
+            for vacancy in vacancy_list:
+                vacancy_data = vacancy['vacancies']
+                cur.execute('''
+                    INSERT INTO vacancies(company_name, company_id, vacancy_name, city_name, publish_date, salary_from,
+                     salary_to, url_vacancy)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                    ''',
+                            (vacancy_data['company_name'], company_id, vacancy_data['vacancy_name'],
+                             vacancy_data['city'], vacancy_data['publish_date'], vacancy_data['salary_from'],
+                             vacancy_data['salary_to'], vacancy_data['vacancy_url'])
+                            )
+
+    conn.commit()
     conn.close()
