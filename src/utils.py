@@ -1,3 +1,4 @@
+import psycopg2
 import requests
 
 
@@ -53,3 +54,15 @@ def get_vacancies(employee_ids):
                                                      'vacancy_url': vacancy['alternate_url'],
                                                      'company_name': vacancy['employer']['name']}})
     return vacancies_list
+
+
+def create_database(database_name, params):
+    """Создание БД и таблиц для сохранения данных о команиях и их вакансиях"""
+    conn = psycopg2.connect(dbname='postgres', **params)
+    conn.autocommit = True
+    cur = conn.cursor()
+
+    cur.execute(f'DROP DATABASE {database_name}')
+    cur.execute(f'CREATE DATABASE {database_name}')
+
+    conn.close()
