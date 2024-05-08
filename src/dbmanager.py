@@ -26,3 +26,17 @@ class DBManager:
                                f'GROUP BY companies.company_id, vacancies.company_name '
                                f'ORDER BY company_id')
         return result
+
+
+    def get_all_vacancies(self):
+        """Получает список всех вакансий с указанием названия компании, названия вакансии и зарплаты и ссылки на
+        вакансию."""
+        result = self.execute_(f'SELECT vacancy_name, company_name, salary_from, salary_from, url_vacancy '
+                               f'FROM vacancies')
+        return result
+
+    def get_avg_salary(self):
+        """Получает среднюю зарплату по вакансиям."""
+        result = self.execute_(f'SELECT AVG(salary_from) AS "Средняя зарплата ОТ", '
+                               f'AVG(salary_to) AS "Средняя зарплата ДО" FROM vacancies')
+        return result
