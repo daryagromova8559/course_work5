@@ -15,3 +15,14 @@ class DBManager:
                 results = cur.fetchall()
         conn.close()
         return results
+
+
+    def get_companies_and_vacancies_count(self):
+        """Получает список всех компаний и количество вакансий у каждой компании."""
+        result = self.execute_(f'SELECT companies.company_id, vacancies.company_name,'
+                               f' COUNT(company_name) AS "Количество вакансий" '
+                               f'FROM companies INNER JOIN vacancies '
+                               f'USING (company_name) '
+                               f'GROUP BY companies.company_id, vacancies.company_name '
+                               f'ORDER BY company_id')
+        return result
